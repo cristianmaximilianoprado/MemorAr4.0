@@ -1,0 +1,2 @@
+rootProject.name='MemorAr'
+include ':app'

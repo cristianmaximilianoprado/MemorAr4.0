@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
     private void loadMemos() {
         this.memos = new ArrayList<>();
         for (int i = 0; i < 12; i++) {
-            memos.add(new Memo("esto es un memo", new Date().getTime()));
+            memos.add(new Memo("esto es un memo", new Date().getTime())); 15:23
             
         }
     }

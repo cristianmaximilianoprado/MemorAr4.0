@@ -1,5 +1,6 @@
 package com.example.memorar.adapters;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,18 +16,24 @@ import com.example.memorar.utils.MemoUtils;
 import java.util.ArrayList;
 
 public class MemosAdapter extends RecyclerView.Adapter<MemosAdapter.MemoHolder> {
+    private Context context;
 
     private ArrayList<Memo> memos;
 
-    @NonNull
+    public MemosAdapter(Context context, ArrayList<Memo> memos) {
+        this.context = context;
+        this.memos = memos;
+    }
+
+
     @Override
-    public MemoHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.memo_layout, parent, false);
+    public MemoHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(context).inflate(R.layout.memo_layout, parent, false);
         return new MemoHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MemoHolder holder, int position) {
+    public void onBindViewHolder(MemoHolder holder, int position) {
         Memo memo = getMemo(position);
         if (memo != null) {
             holder.memoText.setText(memo.getMemoText());
@@ -48,6 +55,8 @@ public class MemosAdapter extends RecyclerView.Adapter<MemosAdapter.MemoHolder> 
 
         public MemoHolder(@NonNull View itemView) {
             super(itemView);
+            memoDate = itemView.findViewById(R.id.memo_date);
+            memoText = itemView.findViewById(R.id.memo_text);
         }
     }
 }

@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.memos_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        loadMemos();
+
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,12 +48,19 @@ public class MainActivity extends AppCompatActivity {
     private void loadMemos() {
         this.memos = new ArrayList<>();
         for (int i = 0; i < 12; i++) {
-            memos.add(new Memo("esto es un memo", new Date().getTime())); 15:23
-            
+            memos.add(new Memo("esto es un memo", new Date().getTime()));
+
         }
+        adapter = new MemosAdapter(this, memos);
+        recyclerView.setAdapter(adapter);
+       // adapter.notifyDataSetChanged();
     }
 
     private void onAddNewMemo() {
+        if (memos != null)
+            memos.add(new Memo("Esta es una nueva nota", new Date().getTime()));
+        if (adapter != null)
+            adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -76,5 +83,11 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadMemos();
     }
 }

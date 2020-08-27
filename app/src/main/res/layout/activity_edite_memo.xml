@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EditeMemoActivity">
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <EditText
+            android:id="@+id/input_memo"
+            android:layout_height="mach_parent"
+            android:layout_gravity="top"
+            android:background="#fff"
+            android:ems="10"
+            android:gravity="tpo"
+            android:inputType="textMultiLine"
+            android:layouy_width="mach_parent"
+
+            />
+    </com.google.android.material.textfield.TextInputEditText>
+</RelativeLayout>

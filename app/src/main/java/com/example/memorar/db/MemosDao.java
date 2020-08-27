@@ -29,6 +29,6 @@ public interface MemosDao {
     @Query("SELECT * FROM memos WHERE id = :memoId")
     Memo getMemoById(int memoId);
 
-    @Query("DELETE FROM memos WHERE id = :memoId") 11:44
+    @Query("DELETE FROM memos WHERE id = :memoId")  11:44
     void deleteMemoById(int memoId);
 }

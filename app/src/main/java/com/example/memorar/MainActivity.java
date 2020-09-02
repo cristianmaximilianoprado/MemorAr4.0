@@ -1,8 +1,11 @@
 package com.example.memorar;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.memorar.adapters.MemosAdapter;
+import com.example.memorar.db.MemosDB;
+import com.example.memorar.db.MemosDao;
 import com.example.memorar.model.Memo;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -18,12 +21,13 @@ import android.view.MenuItem;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private ArrayList<Memo> memos;
     private MemosAdapter adapter;
-
+    private MemosDao dao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,24 +47,22 @@ public class MainActivity extends AppCompatActivity {
                 onAddNewMemo();
             }
         });
+
+        dao = MemosDB.getInstance(this).memosDao();
     }
 
     private void loadMemos() {
         this.memos = new ArrayList<>();
-        for (int i = 0; i < 12; i++) {
-            memos.add(new Memo("esto es un memo", new Date().getTime()));
-
-        }
-        adapter = new MemosAdapter(this, memos);
-        recyclerView.setAdapter(adapter);
-       // adapter.notifyDataSetChanged();
+        List<Memo> list = dao.getMemos();
+        this.memos.addAll(list);
+        this.adapter = new MemosAdapter(this, this.memos);
+        this.recyclerView.setAdapter(adapter);
+        // adapter.notifyDataSetChanged();
     }
 
     private void onAddNewMemo() {
-        if (memos != null)
-            memos.add(new Memo("Esta es una nueva nota", new Date().getTime()));
-        if (adapter != null)
-            adapter.notifyDataSetChanged();
+        //Todo 02/09/2020 inicia EditeMemoActivity
+        startActivity(new Intent(this, EditeMemoActivity.class));
     }
 
     @Override

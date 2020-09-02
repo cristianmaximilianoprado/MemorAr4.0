@@ -10,6 +10,7 @@ import androidx.room.Update;
 import com.example.memorar.model.Memo;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Dao
 public interface MemosDao {
@@ -24,11 +25,11 @@ public interface MemosDao {
     void updateMemo(Memo memo);
 
     @Query("SELECT * FROM memos")
-    ArrayList<Memo> getMemos();
+    List<Memo> getMemos();
 
     @Query("SELECT * FROM memos WHERE id = :memoId")
     Memo getMemoById(int memoId);
 
-    @Query("DELETE FROM memos WHERE id = :memoId")  11:44
+    @Query("DELETE FROM memos WHERE id = :memoId")
     void deleteMemoById(int memoId);
 }

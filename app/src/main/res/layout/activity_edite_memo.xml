@@ -6,20 +6,20 @@
     android:layout_height="match_parent"
     tools:context=".EditeMemoActivity">
 
-    <com.google.android.material.textfield.TextInputEditText
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <EditText
             android:id="@+id/input_memo"
-            android:layout_height="mach_parent"
+            android:layout_height="match_parent"
             android:layout_gravity="top"
             android:background="#fff"
             android:ems="10"
-            android:gravity="tpo"
+            android:gravity="top"
             android:inputType="textMultiLine"
-            android:layouy_width="mach_parent"
+            android:layout_width="match_parent"
 
             />
-    </com.google.android.material.textfield.TextInputEditText>
+    </com.google.android.material.textfield.TextInputLayout>
 </RelativeLayout>

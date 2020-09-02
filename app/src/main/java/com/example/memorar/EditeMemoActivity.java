@@ -17,7 +17,8 @@ import java.util.Date;
 public class EditeMemoActivity extends AppCompatActivity {
     private EditText inputMemo;
     private MemosDao dao;
-
+    private Memo temp;
+    public static final String Memo_EXTRA_key = "memo_i";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +26,11 @@ public class EditeMemoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edite_memo);
         inputMemo = findViewById(R.id.input_memo);
         dao = MemosDB.getInstance(this).memosDao();
+        if (getIntent().getExtras() != null) {
+            int id = getIntent().getExtras().getInt(Memo_EXTRA_key, 0);
+            temp = dao.getMemoById(id);
+
+        }                       9:34
     }
 
     @Override

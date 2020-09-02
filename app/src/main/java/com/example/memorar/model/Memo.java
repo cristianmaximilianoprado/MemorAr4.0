@@ -42,4 +42,12 @@ public class Memo {
     public void setId(int id) {
         this.id = id;
     }
+
+    @Override
+    public String toString() {
+        return "Memo{" +
+                "id=" + id +
+                ", memodate=" + memodate +
+                '}';
+    }
 }

@@ -18,6 +18,7 @@ public class EditeMemoActivity extends AppCompatActivity {
     private EditText inputMemo;
     private MemosDao dao;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

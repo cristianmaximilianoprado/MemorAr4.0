@@ -101,7 +101,8 @@ public class MainActivity extends AppCompatActivity implements MemoEventListener
 
     @Override
     public void onMemoClick(Memo memo) {
-        Toast.makeText(this, memo.getId(), Toast.LENGTH_SHORT).show();
+
+
     }
 
     @Override

@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.memorar.R;
+import com.example.memorar.callbacks.MemoEventListener;
 import com.example.memorar.model.Memo;
 import com.example.memorar.utils.MemoUtils;
 
@@ -19,6 +20,7 @@ public class MemosAdapter extends RecyclerView.Adapter<MemosAdapter.MemoHolder> 
     private Context context;
 
     private ArrayList<Memo> memos;
+    private MemoEventListener listener;
 
     public MemosAdapter(Context context, ArrayList<Memo> memos) {
         this.context = context;
@@ -34,10 +36,25 @@ public class MemosAdapter extends RecyclerView.Adapter<MemosAdapter.MemoHolder> 
 
     @Override
     public void onBindViewHolder(MemoHolder holder, int position) {
-        Memo memo = getMemo(position);
+        final Memo memo = getMemo(position);
         if (memo != null) {
             holder.memoText.setText(memo.getMemoText());
             holder.memoDate.setText(MemoUtils.dateFromLong(memo.getMemodate()));
+
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    listener.onMemoClick(memo);
+                }
+            });
+
+            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    listener.onMemoLongClick(memo);
+                    return false;
+                }
+            });
         }
     }
 
@@ -58,5 +75,9 @@ public class MemosAdapter extends RecyclerView.Adapter<MemosAdapter.MemoHolder> 
             memoDate = itemView.findViewById(R.id.memo_date);
             memoText = itemView.findViewById(R.id.memo_text);
         }
+    }
+
+    public void setListener(MemoEventListener listener) {
+        this.listener = listener;
     }
 }

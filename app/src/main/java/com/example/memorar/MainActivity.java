@@ -1,9 +1,11 @@
 package com.example.memorar;
 
 import android.content.Intent;
+import android.nfc.Tag;
 import android.os.Bundle;
 
 import com.example.memorar.adapters.MemosAdapter;
+import com.example.memorar.callbacks.MemoEventListener;
 import com.example.memorar.db.MemosDB;
 import com.example.memorar.db.MemosDao;
 import com.example.memorar.model.Memo;
@@ -15,15 +17,18 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MemoEventListener {
+    private static final String TAG = "MainActivity";
     private RecyclerView recyclerView;
     private ArrayList<Memo> memos;
     private MemosAdapter adapter;
@@ -56,8 +61,9 @@ public class MainActivity extends AppCompatActivity {
         List<Memo> list = dao.getMemos();
         this.memos.addAll(list);
         this.adapter = new MemosAdapter(this, this.memos);
+        this.adapter.setListener(this);
         this.recyclerView.setAdapter(adapter);
-        // adapter.notifyDataSetChanged();
+
     }
 
     private void onAddNewMemo() {
@@ -91,5 +97,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         loadMemos();
+    }
+
+    @Override
+    public void onMemoClick(Memo memo) {
+        Toast.makeText(this, memo.getId(), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onMemoLongClick(Memo memo) {
+
+        Log.d(TAG, "onMemoLongClick:" + memo.getId());
     }
 }

@@ -1,5 +1,6 @@
 package com.example.memorar;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.nfc.Tag;
 import android.os.Bundle;
@@ -9,9 +10,11 @@ import com.example.memorar.callbacks.MemoEventListener;
 import com.example.memorar.db.MemosDB;
 import com.example.memorar.db.MemosDao;
 import com.example.memorar.model.Memo;
+import com.example.memorar.utils.MemoUtils;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -26,6 +29,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import static com.example.memorar.EditeMemoActivity.MEMO_EXTRA_key;
 
 public class MainActivity extends AppCompatActivity implements MemoEventListener {
     private static final String TAG = "MainActivity";
@@ -102,12 +107,43 @@ public class MainActivity extends AppCompatActivity implements MemoEventListener
     @Override
     public void onMemoClick(Memo memo) {
 
-
+        Intent edit = new Intent(this, EditeMemoActivity.class);
+        edit.putExtra(MEMO_EXTRA_key, memo.getId());
+        startActivity(edit);
     }
 
     @Override
-    public void onMemoLongClick(Memo memo) {
+    public void onMemoLongClick(final Memo memo) {
 
-        Log.d(TAG, "onMemoLongClick:" + memo.getId());
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.app_name)
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+
+                        dialogInterface.dismiss();
+
+                    }
+                }).setPositiveButton("Eliminar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dao.deleteMemo(memo);
+                loadMemos();
+
+            }
+        }).setNegativeButton("Enviar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Intent share = new Intent(Intent.ACTION_SEND);
+
+                String text = memo.getMemoText() + "\n Create on :" + MemoUtils.dateFromLong(memo.getMemoDate()) + "By :" + getString(R.string.app_name);
+                Log.d(TAG, "onClick:" + text);
+                share.setType("text/plain");
+                share.putExtra(Intent.EXTRA_TEXT, text);
+                startActivity(share);
+
+            }
+        }).create().show();
     }
 }

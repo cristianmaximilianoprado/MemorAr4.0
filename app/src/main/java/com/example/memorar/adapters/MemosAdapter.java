@@ -39,7 +39,7 @@ public class MemosAdapter extends RecyclerView.Adapter<MemosAdapter.MemoHolder> 
         final Memo memo = getMemo(position);
         if (memo != null) {
             holder.memoText.setText(memo.getMemoText());
-            holder.memoDate.setText(MemoUtils.dateFromLong(memo.getMemodate()));
+            holder.memoDate.setText(MemoUtils.dateFromLong(memo.getMemoDate()));
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

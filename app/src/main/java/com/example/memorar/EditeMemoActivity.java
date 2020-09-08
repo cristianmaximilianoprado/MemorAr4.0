@@ -18,7 +18,7 @@ public class EditeMemoActivity extends AppCompatActivity {
     private EditText inputMemo;
     private MemosDao dao;
     private Memo temp;
-    public static final String Memo_EXTRA_key = "memo_i";
+    public static final String MEMO_EXTRA_key = "memo_id";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,10 +27,11 @@ public class EditeMemoActivity extends AppCompatActivity {
         inputMemo = findViewById(R.id.input_memo);
         dao = MemosDB.getInstance(this).memosDao();
         if (getIntent().getExtras() != null) {
-            int id = getIntent().getExtras().getInt(Memo_EXTRA_key, 0);
+            int id = getIntent().getExtras().getInt(MEMO_EXTRA_key, 0);
             temp = dao.getMemoById(id);
+            inputMemo.setText(temp.getMemoText());
 
-        }                       9:34
+        } else temp = new Memo();
     }
 
     @Override
@@ -52,8 +53,14 @@ public class EditeMemoActivity extends AppCompatActivity {
         String text = inputMemo.getText().toString();
         if (!text.isEmpty()) {
             long date = new Date().getTime();
-            Memo memo = new Memo(text, date); //Crea nuevo memo
-            dao.insertMemo(memo); // Inserta y guarda nuevo memo en base de datos
+
+
+            temp.setMemoDate(date);
+            temp.setMemoText(text);
+
+            if (temp.getId() == -1)
+                dao.insertMemo(temp); // Inserta y guarda nuevo memo en base de datos
+            else dao.updateMemo(temp);
 
             finish(); //retorna a mainactivity
         }

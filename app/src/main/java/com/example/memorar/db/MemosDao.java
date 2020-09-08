@@ -9,7 +9,7 @@ import androidx.room.Update;
 
 import com.example.memorar.model.Memo;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 @Dao

@@ -8,15 +8,18 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "memos")
 public class Memo {
     @PrimaryKey(autoGenerate = true)
-    private int id;
+    private int id = -1; //valor por defecto
     @ColumnInfo(name = "text")
     private String memoText;
     @ColumnInfo(name = "date")
-    private long memodate;
+    private long memoDate;
 
-    public Memo(String memoText, long memodate) {
+    public Memo() {
+    }
+
+    public Memo(String memoText, long memoDate) {
         this.memoText = memoText;
-        this.memodate = memodate;
+        this.memoDate = memoDate;
     }
 
     public String getMemoText() {
@@ -27,12 +30,12 @@ public class Memo {
         this.memoText = memoText;
     }
 
-    public long getMemodate() {
-        return memodate;
+    public long getMemoDate() {
+        return memoDate;
     }
 
-    public void setMemodate(long memodate) {
-        this.memodate = memodate;
+    public void setMemoDate(long memoDate) {
+        this.memoDate = memoDate;
     }
 
     public int getId() {
@@ -47,7 +50,7 @@ public class Memo {
     public String toString() {
         return "Memo{" +
                 "id=" + id +
-                ", memodate=" + memodate +
+                ", memoDate=" + memoDate +
                 '}';
     }
 }
